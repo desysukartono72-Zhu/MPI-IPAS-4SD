@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI IPAS Kelas 4 SD - Menjelaskan Nilai Mata Uang</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Google: Fredoka & Quicksand untuk kesan ramah anak -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #e0f2fe; /* Light blue */
+            overflow-x: hidden;
+            user-select: none;
+        }
+        h1, h2, h3, .font-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        /* Custom scrollbar untuk kenyamanan visual */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Efek Flip Card untuk Materi Uang */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        /* Animasi balon mengapung di background */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-delayed {
+            animation: float 8s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-yellow-300">
+
+    <!-- BACKGROUND ANIMASI HIASAN -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+        <!-- Awan 1 -->
+        <svg class="absolute top-10 left-[10%] w-24 h-16 text-white fill-current floating-element" viewBox="0 0 100 100">
+            <path d="M20,50 a15,15 0 0,1 25,-5 a20,20 0 0,1 35,5 a15,15 0 0,1 15,15 a15,15 0 0,1 -15,15 l-60,0 a15,15 0 0,1 -15,-15 a15,15 0 0,1 15,-15 z"/>
+        </svg>
+        <!-- Awan 2 -->
+        <svg class="absolute top-32 right-[15%] w-32 h-20 text-white fill-current floating-delayed" viewBox="0 0 100 100">
+            <path d="M20,50 a15,15 0 0,1 25,-5 a20,20 0 0,1 35,5 a15,15 0 0,1 15,15 a15,15 0 0,1 -15,15 l-60,0 a15,15 0 0,1 -15,-15 a15,15 0 0,1 15,-15 z"/>
+        </svg>
+        <!-- Koin Mengambang 1 -->
+        <div class="absolute bottom-20 left-[8%] bg-yellow-400 w-16 h-16 rounded-full border-4 border-yellow-500 flex items-center justify-center font-bold text-yellow-700 text-2xl shadow-lg floating-delayed">Rp</div>
+        <!-- Koin Mengambang 2 -->
+        <div class="absolute top-1/2 right-[5%] bg-yellow-400 w-12 h-12 rounded-full border-4 border-yellow-500 flex items-center justify-center font-bold text-yellow-700 text-lg shadow-lg floating-element">Rp</div>
+    </div>
+
+    <!-- HEADER / CONTROL BAR -->
+    <header class="relative z-10 w-full px-4 py-3 flex justify-between items-center bg-white/80 backdrop-blur-md border-b-4 border-blue-200 shadow-sm">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('welcome')">
+            <span class="text-3xl">💰</span>
+            <div>
+                <h1 class="text-lg md:text-xl font-bold text-blue-600 leading-tight">MPI IPAS KELAS IV</h1>
+                <p class="text-xs md:text-sm text-gray-500 font-semibold">Menjelaskan Nilai Mata Uang</p>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="flex items-center gap-2">
+            <!-- Audio Toggle -->
+            <button id="btn-audio" onclick="toggleMusic()" class="bg-amber-100 hover:bg-amber-200 border-2 border-amber-400 text-amber-700 px-3 py-1.5 rounded-full flex items-center gap-1.5 font-bold text-sm transition-all duration-300 shadow-sm">
+                <span id="audio-icon">🔈</span> <span class="hidden md:inline">Musik</span>
+            </button>
+            <!-- Fullscreen Button -->
+            <button onclick="toggleFullscreen()" class="bg-blue-100 hover:bg-blue-200 border-2 border-blue-400 text-blue-700 p-1.5 rounded-full transition-all duration-300 shadow-sm" title="Layar Penuh">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+            </button>
+            <!-- Home Button (Akan disembunyikan di welcome screen) -->
+            <button id="header-btn-home" onclick="showSection('menu')" class="hidden bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-400 text-emerald-700 px-3 py-1.5 rounded-full flex items-center gap-1 font-bold text-sm transition-all duration-300 shadow-sm">
+                <span>🏠</span> <span>Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="relative z-10 flex-grow w-full max-w-6xl mx-auto px-4 py-6 flex items-center justify-center">
+
+        <!-- ========================================================== -->
+        <!-- 1. HALAMAN PEMBUKA (WELCOME SPLASH) -->
+        <!-- ========================================================== -->
+        <section id="sec-welcome" class="w-full text-center py-8">
+            <div class="bg-white/90 p-8 md:p-12 rounded-3xl border-8 border-yellow-300 shadow-2xl max-w-2xl mx-auto transform transition duration-500 hover:scale-102">
+                <div class="flex justify-center mb-6">
+                    <div class="relative">
+                        <span class="text-8xl md:text-9xl animate-bounce inline-block">🪙</span>
+                        <span class="text-6xl absolute -bottom-2 -right-4 animate-pulse">💵</span>
+                    </div>
+                </div>
+                
+                <span class="bg-blue-100 text-blue-600 text-xs md:text-sm font-bold px-4 py-1.5 rounded-full border border-blue-300 uppercase tracking-wider">MEDIA PEMBELAJARAN INTERAKTIF IPAS</span>
+                
+                <h2 class="text-3xl md:text-5xl font-bold text-blue-600 mt-4 mb-2 drop-shadow">Menjelaskan Nilai Mata Uang</h2>
+                <p class="text-gray-600 text-base md:text-lg font-medium mb-8">Kurikulum Merdeka • Kelas 4 SD • Semester 2</p>
+                
+                <button onclick="playClickAndGo('menu')" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xl md:text-2xl px-10 py-4 rounded-2xl border-b-8 border-emerald-700 active:border-b-2 active:translate-y-1 transition-all duration-150 shadow-lg inline-flex items-center gap-3">
+                    🚀 Mulai Belajar! 🚀
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 2. MENU UTAMA -->
+        <!-- ========================================================== -->
+        <section id="sec-menu" class="hidden w-full">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl md:text-4xl font-bold text-blue-700 drop-shadow">Pilih Menu Belajar 🌟</h2>
+                <p class="text-gray-600 font-semibold text-sm md:text-base">Yuk pilih aktivitas seru yang ingin kamu lakukan hari ini!</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+                <!-- Menu Judul -->
+                <div onclick="playClickAndGo('judul')" class="cursor-pointer bg-sky-100 hover:bg-sky-200 border-4 border-sky-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px]">
+                    <span class="text-5xl mb-2">🏷️</span>
+                    <h3 class="font-bold text-sky-800 text-base md:text-lg mt-auto">Identitas Media</h3>
+                </div>
+
+                <!-- Menu Sasaran -->
+                <div onclick="playClickAndGo('sasaran')" class="cursor-pointer bg-purple-100 hover:bg-purple-200 border-4 border-purple-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px]">
+                    <span class="text-5xl mb-2">🎯</span>
+                    <h3 class="font-bold text-purple-800 text-base md:text-lg mt-auto">Tujuan Belajar</h3>
+                </div>
+
+                <!-- Menu Petunjuk -->
+                <div onclick="playClickAndGo('petunjuk')" class="cursor-pointer bg-amber-100 hover:bg-amber-200 border-4 border-amber-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px]">
+                    <span class="text-5xl mb-2">📑</span>
+                    <h3 class="font-bold text-amber-800 text-base md:text-lg mt-auto">Petunjuk Penggunaan</h3>
+                </div>
+
+                <!-- Menu Materi -->
+                <div onclick="playClickAndGo('materi')" class="cursor-pointer bg-teal-100 hover:bg-teal-200 border-4 border-teal-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px]">
+                    <span class="text-5xl mb-2">📖</span>
+                    <h3 class="font-bold text-teal-800 text-base md:text-lg mt-auto">Materi Belajar</h3>
+                </div>
+
+                <!-- Menu Kuis -->
+                <div onclick="playClickAndGo('kuis')" class="cursor-pointer bg-red-100 hover:bg-red-200 border-4 border-red-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px]">
+                    <span class="text-5xl mb-2">✍️</span>
+                    <h3 class="font-bold text-red-800 text-base md:text-lg mt-auto">Kuis Interaktif</h3>
+                </div>
+
+                <!-- Menu Game -->
+                <div onclick="playClickAndGo('game')" class="cursor-pointer bg-orange-100 hover:bg-orange-200 border-4 border-orange-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px]">
+                    <span class="text-5xl mb-2">🎮</span>
+                    <h3 class="font-bold text-orange-800 text-base md:text-lg mt-auto">Game Kasir Cilik</h3>
+                </div>
+
+                <!-- Menu Tim Pengembang -->
+                <div onclick="playClickAndGo('tim')" class="cursor-pointer bg-lime-100 hover:bg-lime-200 border-4 border-lime-400 p-5 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center justify-between min-h-[160px] col-span-2 sm:col-span-1">
+                    <span class="text-5xl mb-2">👩‍🏫</span>
+                    <h3 class="font-bold text-lime-800 text-base md:text-lg mt-auto">Tim Pengembang</h3>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 3. SECTION JUDUL & IDENTITAS -->
+        <!-- ========================================================== -->
+        <section id="sec-judul" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-sky-400 p-6 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-sky-700">🏷️ Identitas Media Pembelajaran</h2>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">Kembali 🏠</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Detail Informasi -->
+                    <div class="space-y-4">
+                        <div class="bg-sky-50 p-4 rounded-xl border-l-8 border-sky-500">
+                            <span class="text-xs text-sky-500 font-bold uppercase tracking-wide">Mata Pelajaran</span>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800">Ilmu Pengetahuan Alam dan Sosial (IPAS)</h3>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-xl border-l-8 border-emerald-500">
+                            <span class="text-xs text-emerald-500 font-bold uppercase tracking-wide">Sasaran Kelas</span>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800">Fase B - Kelas IV (Empat) Sekolah Dasar</h3>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-xl border-l-8 border-amber-500">
+                            <span class="text-xs text-amber-500 font-bold uppercase tracking-wide">Materi Pokok</span>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800">Menjelaskan Nilai Mata Uang</h3>
+                        </div>
+                    </div>
+
+                    <!-- Ilustrasi Rupiah -->
+                    <div class="bg-gradient-to-tr from-sky-50 to-indigo-50 p-6 rounded-2xl border-4 border-dashed border-sky-300 text-center flex flex-col items-center">
+                        <h4 class="font-bold text-sky-800 mb-4">Uang Rupiah Indonesia 🇮🇩</h4>
+                        <!-- SVG Uang Rupiah Kertas Model Sederhana -->
+                        <div class="relative w-full max-w-[280px] h-32 bg-teal-500 rounded-xl border-4 border-teal-600 flex flex-col justify-between p-3 text-white shadow-lg overflow-hidden">
+                            <!-- Pola Air Uang -->
+                            <div class="absolute -right-10 -top-10 w-28 h-28 bg-teal-400/30 rounded-full"></div>
+                            <div class="flex justify-between items-start z-10">
+                                <span class="text-xs font-bold">Bank Indonesia</span>
+                                <span class="text-xs font-bold">Rp100.000</span>
+                            </div>
+                            <div class="text-center my-auto z-10 flex flex-col items-center">
+                                <span class="text-3xl">🧑‍💼</span>
+                                <span class="text-[9px] tracking-widest uppercase opacity-80">Soekarno-Hatta</span>
+                            </div>
+                            <div class="flex justify-between items-end z-10">
+                                <span class="text-[9px]">SERI REPUBLIK INDONESIA</span>
+                                <span class="text-xs font-bold">100000</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4 leading-relaxed font-semibold">Uang Rupiah adalah alat pembayaran yang sah di negara Kesatuan Republik Indonesia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 4. SECTION SASARAN / TUJUAN -->
+        <!-- ========================================================== -->
+        <section id="sec-sasaran" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-purple-400 p-6 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-purple-700">🎯 Sasaran & Tujuan Belajar</h2>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">Kembali 🏠</button>
+                </div>
+
+                <p class="text-gray-600 mb-6 font-semibold">Setelah menyelesaikan pembelajaran menggunakan media interaktif ini, kamu diharapkan dapat mencapai beberapa tujuan hebat ini:</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                    <!-- Kartu 1 -->
+                    <div class="bg-purple-50 p-5 rounded-2xl border-2 border-purple-200 flex gap-4 items-start shadow-sm transition hover:scale-103 duration-300">
+                        <span class="text-4xl bg-purple-200 p-2.5 rounded-xl">💵</span>
+                        <div>
+                            <h3 class="font-bold text-purple-900 text-lg mb-1">Mengenal Uang</h3>
+                            <p class="text-sm text-purple-750 font-medium leading-relaxed">Siswa mampu mengenal berbagai pecahan uang rupiah kertas maupun logam.</p>
+                        </div>
+                    </div>
+
+                    <!-- Kartu 2 -->
+                    <div class="bg-sky-50 p-5 rounded-2xl border-2 border-sky-200 flex gap-4 items-start shadow-sm transition hover:scale-103 duration-300">
+                        <span class="text-4xl bg-sky-200 p-2.5 rounded-xl">🔍</span>
+                        <div>
+                            <h3 class="font-bold text-sky-900 text-lg mb-1">Menjelaskan Nilai</h3>
+                            <p class="text-sm text-sky-750 font-medium leading-relaxed">Siswa mampu menjelaskan dan melafalkan nilai nominal mata uang rupiah dengan benar.</p>
+                        </div>
+                    </div>
+
+                    <!-- Kartu 3 -->
+                    <div class="bg-emerald-50 p-5 rounded-2xl border-2 border-emerald-200 flex gap-4 items-start shadow-sm transition hover:scale-103 duration-300">
+                        <span class="text-4xl bg-emerald-200 p-2.5 rounded-xl">⚖️</span>
+                        <div>
+                            <h3 class="font-bold text-emerald-900 text-lg mb-1">Membandingkan Nilai</h3>
+                            <p class="text-sm text-emerald-750 font-medium leading-relaxed">Siswa mampu membandingkan dan mengurutkan kelompok nilai uang yang setara atau berbeda.</p>
+                        </div>
+                    </div>
+
+                    <!-- Kartu 4 -->
+                    <div class="bg-amber-50 p-5 rounded-2xl border-2 border-amber-200 flex gap-4 items-start shadow-sm transition hover:scale-103 duration-300">
+                        <span class="text-4xl bg-amber-200 p-2.5 rounded-xl">🛒</span>
+                        <div>
+                            <h3 class="font-bold text-amber-900 text-lg mb-1">Penerapan Sehari-hari</h3>
+                            <p class="text-sm text-amber-750 font-medium leading-relaxed">Siswa mampu menyelesaikan masalah terkait nilai uang dalam aktivitas simulasi belanja sederhana.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 5. SECTION PETUNJUK PENGGUNAAN -->
+        <!-- ========================================================== -->
+        <section id="sec-petunjuk" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-amber-400 p-6 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-amber-750">📑 Petunjuk Penggunaan</h2>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">Kembali 🏠</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <!-- Infografis Langkah -->
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                            <span class="w-10 h-10 bg-amber-400 text-white rounded-full flex items-center justify-center font-bold text-lg">1</span>
+                            <p class="text-sm font-semibold text-amber-900">Klik menu utama untuk berpindah ke halaman mana pun yang kamu suka.</p>
+                        </div>
+                        <div class="flex items-center gap-4 bg-teal-50 p-3 rounded-xl border border-teal-200">
+                            <span class="w-10 h-10 bg-teal-400 text-white rounded-full flex items-center justify-center font-bold text-lg">2</span>
+                            <p class="text-sm font-semibold text-teal-900">Buka <strong>Materi Belajar</strong> dan ketuk kartu uang logam/kertas untuk melihat detail nilainya!</p>
+                        </div>
+                        <div class="flex items-center gap-4 bg-red-50 p-3 rounded-xl border border-red-200">
+                            <span class="w-10 h-10 bg-red-400 text-white rounded-full flex items-center justify-center font-bold text-lg">3</span>
+                            <p class="text-sm font-semibold text-red-900">Uji kemampuanmu di menu <strong>Kuis Interaktif</strong> dan kumpulkan bintang sebanyak mungkin.</p>
+                        </div>
+                        <div class="flex items-center gap-4 bg-orange-50 p-3 rounded-xl border border-orange-200">
+                            <span class="w-10 h-10 bg-orange-400 text-white rounded-full flex items-center justify-center font-bold text-lg">4</span>
+                            <p class="text-sm font-semibold text-orange-900">Bermainlah sebagai kasir di game <strong>Kasir Cilik</strong> untuk belajar menjumlahkan uang belanjaan!</p>
+                        </div>
+                    </div>
+
+                    <!-- Petunjuk Audio & Navigasi -->
+                    <div class="bg-amber-50 p-6 rounded-2xl border-4 border-dashed border-amber-300 text-center">
+                        <span class="text-6xl mb-4 block">🎧</span>
+                        <h3 class="font-bold text-amber-800 text-lg mb-2">Mau belajar sambil mendengarkan musik?</h3>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed mb-4">Kamu bisa menekan tombol <strong class="text-amber-700">🔈 Musik</strong> di pojok kanan atas untuk menghidupkan lagu ceria saat belajar.</p>
+                        <div class="bg-white p-3 rounded-xl border border-amber-200 inline-block font-bold text-xs text-amber-700">
+                            💡 Gunakan laptop atau tablet untuk pengalaman terbaik!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 6. SECTION URAIAN MATERI -->
+        <!-- ========================================================== -->
+        <section id="sec-materi" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-teal-400 p-5 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-teal-700">📖 Belajar Mengenal Uang Rupiah</h2>
+                        <p class="text-sm text-gray-500 font-semibold">Yuk ketuk kartu di bawah ini untuk melihat nilainya secara detail!</p>
+                    </div>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md self-end sm:self-center">Kembali 🏠</button>
+                </div>
+
+                <!-- SUB-MENU MATERI (TAB) -->
+                <div class="flex gap-2 border-b-2 border-gray-200 pb-3 mb-6 overflow-x-auto">
+                    <button id="tab-materi-1" onclick="switchMateriTab(1)" class="px-4 py-2 rounded-xl font-bold text-sm md:text-base whitespace-nowrap bg-teal-500 text-white transition">🪙 Uang Logam</button>
+                    <button id="tab-materi-2" onclick="switchMateriTab(2)" class="px-4 py-2 rounded-xl font-bold text-sm md:text-base whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-teal-100 transition">💵 Uang Kertas</button>
+                    <button id="tab-materi-3" onclick="switchMateriTab(3)" class="px-4 py-2 rounded-xl font-bold text-sm md:text-base whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-teal-100 transition">⚖️ Perbandingan</button>
+                    <button id="tab-materi-4" onclick="switchMateriTab(4)" class="px-4 py-2 rounded-xl font-bold text-sm md:text-base whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-teal-100 transition">🛒 Transaksi</button>
+                </div>
+
+                <!-- SUB-KONTEN 1: UANG LOGAM -->
+                <div id="sub-materi-1" class="space-y-6">
+                    <p class="text-gray-600 font-semibold">Uang logam di Indonesia memiliki nilai nominal yang lebih kecil dibanding kertas dan terbuat dari bahan logam yang tahan lama.</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <!-- Card Rp100 -->
+                        <div class="flip-card h-44 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-teal-50 border-4 border-teal-300 flex flex-col items-center justify-center p-3">
+                                    <div class="w-16 h-16 bg-gray-300 rounded-full border-4 border-gray-400 flex items-center justify-center font-bold text-gray-700 text-xl shadow-inner">100</div>
+                                    <h4 class="font-bold text-teal-800 text-lg mt-3">Rp100,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-teal-600 text-white flex flex-col items-center justify-center p-3">
+                                    <p class="font-bold text-base">Dibaca:</p>
+                                    <p class="text-sm font-semibold italic mt-1 bg-teal-700 px-3 py-1 rounded-lg">"Seratus rupiah"</p>
+                                    <p class="text-xs mt-3 opacity-90">Paling kecil nilainya di seri terbaru.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Rp200 -->
+                        <div class="flip-card h-44 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-teal-50 border-4 border-teal-300 flex flex-col items-center justify-center p-3">
+                                    <div class="w-18 h-18 bg-gray-300 rounded-full border-4 border-gray-400 flex items-center justify-center font-bold text-gray-700 text-xl shadow-inner">200</div>
+                                    <h4 class="font-bold text-teal-800 text-lg mt-3">Rp200,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-teal-600 text-white flex flex-col items-center justify-center p-3">
+                                    <p class="font-bold text-base">Dibaca:</p>
+                                    <p class="text-sm font-semibold italic mt-1 bg-teal-700 px-3 py-1 rounded-lg">"Dua ratus rupiah"</p>
+                                    <p class="text-xs mt-3 opacity-90">Biasanya dipakai kembalian belanja.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Rp500 -->
+                        <div class="flip-card h-44 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-teal-50 border-4 border-teal-300 flex flex-col items-center justify-center p-3">
+                                    <div class="w-20 h-20 bg-gray-300 rounded-full border-4 border-gray-400 flex items-center justify-center font-bold text-gray-700 text-xl shadow-inner">500</div>
+                                    <h4 class="font-bold text-teal-800 text-lg mt-3">Rp500,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-teal-600 text-white flex flex-col items-center justify-center p-3">
+                                    <p class="font-bold text-base">Dibaca:</p>
+                                    <p class="text-sm font-semibold italic mt-1 bg-teal-700 px-3 py-1 rounded-lg">"Lima ratus rupiah"</p>
+                                    <p class="text-xs mt-3 opacity-90">Sering digambarkan dengan bunga melati.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Rp1000 -->
+                        <div class="flip-card h-44 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-teal-50 border-4 border-teal-300 flex flex-col items-center justify-center p-3">
+                                    <div class="w-22 h-22 bg-yellow-100 rounded-full border-4 border-yellow-400 flex items-center justify-center font-bold text-yellow-700 text-xl shadow-inner">1000</div>
+                                    <h4 class="font-bold text-teal-800 text-lg mt-3">Rp1.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-teal-600 text-white flex flex-col items-center justify-center p-3">
+                                    <p class="font-bold text-base">Dibaca:</p>
+                                    <p class="text-sm font-semibold italic mt-1 bg-teal-700 px-3 py-1 rounded-lg">"Seribu rupiah"</p>
+                                    <p class="text-xs mt-3 opacity-90">Logam bernilai paling tinggi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-KONTEN 2: UANG KERTAS -->
+                <div id="sub-materi-2" class="hidden space-y-6">
+                    <p class="text-gray-600 font-semibold">Uang kertas di Indonesia memiliki pecahan yang lebih bervariasi dengan warna-warna yang sangat indah. Ketuk kartu uang kertas untuk melihat sebutannya!</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Rp1.000 Kertas -->
+                        <div class="flip-card h-32 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-emerald-50 border-4 border-emerald-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-emerald-200 border-2 border-emerald-300 rounded-lg flex items-center justify-between px-3 text-emerald-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">1.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-emerald-800 mt-2">Rp1.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-emerald-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Seribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-emerald-700 px-3 py-1 rounded-lg">Warna dominan: Hijau Kekuningan</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rp2.000 Kertas -->
+                        <div class="flip-card h-32 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-slate-50 border-4 border-slate-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-slate-200 border-2 border-slate-300 rounded-lg flex items-center justify-between px-3 text-slate-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">2.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-slate-800 mt-2">Rp2.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-slate-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Dua Ribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-slate-700 px-3 py-1 rounded-lg">Warna dominan: Abu-abu</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rp5.000 Kertas -->
+                        <div class="flip-card h-32 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-orange-50 border-4 border-orange-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-orange-100 border-2 border-orange-200 rounded-lg flex items-center justify-between px-3 text-orange-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">5.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-orange-800 mt-2">Rp5.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-orange-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Lima Ribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-orange-700 px-3 py-1 rounded-lg">Warna dominan: Cokelat</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rp10.000 Kertas -->
+                        <div class="flip-card h-32 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-purple-50 border-4 border-purple-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-purple-200 border-2 border-purple-300 rounded-lg flex items-center justify-between px-3 text-purple-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">10.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-purple-800 mt-2">Rp10.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-purple-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Sepuluh Ribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-purple-700 px-3 py-1 rounded-lg">Warna dominan: Ungu</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rp20.000 Kertas -->
+                        <div class="flip-card h-32 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-green-50 border-4 border-green-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-green-200 border-2 border-green-300 rounded-lg flex items-center justify-between px-3 text-green-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">20.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-green-800 mt-2">Rp20.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-green-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Dua Puluh Ribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-green-700 px-3 py-1 rounded-lg">Warna dominan: Hijau</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rp50.000 Kertas -->
+                        <div class="flip-card h-32 cursor-pointer" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-blue-50 border-4 border-blue-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-blue-200 border-2 border-blue-300 rounded-lg flex items-center justify-between px-3 text-blue-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">50.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-blue-800 mt-2">Rp50.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-blue-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Lima Puluh Ribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-blue-700 px-3 py-1 rounded-lg">Warna dominan: Biru</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rp100.000 Kertas (Lebar 3 Kolom di layar besar) -->
+                        <div class="flip-card h-32 cursor-pointer sm:col-span-2 md:col-span-3" onclick="toggleCardFlip(this)">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front bg-red-50 border-4 border-red-300 flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <div class="w-full h-16 bg-red-200 border-2 border-red-300 rounded-lg flex items-center justify-between px-3 text-red-800">
+                                        <span class="text-xs font-bold">BI</span>
+                                        <span class="text-sm font-bold">100.000</span>
+                                    </div>
+                                    <h4 class="font-bold text-red-800 mt-2">Rp100.000,00</h4>
+                                </div>
+                                <div class="flip-card-back bg-red-600 text-white flex flex-col items-center justify-center p-3 rounded-2xl">
+                                    <p class="font-bold">Seratus Ribu Rupiah</p>
+                                    <p class="text-xs mt-1 bg-red-700 px-3 py-1 rounded-lg">Warna dominan: Merah (Paling tinggi nilainya)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-KONTEN 3: PERBANDINGAN NILAI UANG -->
+                <div id="sub-materi-3" class="hidden space-y-6">
+                    <p class="text-gray-600 font-semibold">Membandingkan uang artinya melihat uang mana yang nilainya **Lebih Besar (&gt;)**, **Lebih Kecil (&lt;)**, atau **Sama Dengan (=)**.</p>
+                    
+                    <div class="bg-teal-50 border-2 border-teal-200 rounded-2xl p-5 space-y-4">
+                        <h4 class="font-bold text-teal-800 text-lg">Contoh 1: Lebih Besar</h4>
+                        <div class="flex items-center justify-center gap-6 flex-wrap">
+                            <div class="bg-white p-3 rounded-xl border-2 border-teal-300 font-bold text-teal-800 shadow-sm text-center">
+                                💵 Rp5.000
+                            </div>
+                            <span class="text-3xl font-bold text-red-500"> Lebih Besar Dari (&gt;) </span>
+                            <div class="bg-white p-3 rounded-xl border-2 border-teal-300 font-bold text-teal-800 shadow-sm text-center">
+                                🪙 Rp1.000
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-teal-50 border-2 border-teal-200 rounded-2xl p-5 space-y-4">
+                        <h4 class="font-bold text-teal-800 text-lg">Contoh 2: Lebih Kecil</h4>
+                        <div class="flex items-center justify-center gap-6 flex-wrap">
+                            <div class="bg-white p-3 rounded-xl border-2 border-teal-300 font-bold text-teal-800 shadow-sm text-center">
+                                🪙 Rp200
+                            </div>
+                            <span class="text-3xl font-bold text-red-500"> Lebih Kecil Dari (&lt;) </span>
+                            <div class="bg-white p-3 rounded-xl border-2 border-teal-300 font-bold text-teal-800 shadow-sm text-center">
+                                💵 Rp2.000
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-teal-50 border-2 border-teal-200 rounded-2xl p-5 space-y-4">
+                        <h4 class="font-bold text-teal-800 text-lg">Contoh 3: Setara (Sama Dengan)</h4>
+                        <div class="flex items-center justify-center gap-6 flex-wrap">
+                            <div class="bg-white p-3 rounded-xl border-2 border-teal-300 font-bold text-teal-800 shadow-sm text-center">
+                                💵 Rp10.000 (1 Lembar)
+                            </div>
+                            <span class="text-3xl font-bold text-emerald-500"> Setara Dengan (=) </span>
+                            <div class="bg-white p-3 rounded-xl border-2 border-teal-300 font-bold text-teal-800 shadow-sm text-center">
+                                💵 Rp5.000 (2 Lembar)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-KONTEN 4: TRANSAKSI SEHARI-HARI -->
+                <div id="sub-materi-4" class="hidden space-y-6">
+                    <p class="text-gray-600 font-semibold">Mari kita coba melakukan simulasi pembayaran dan menghitung uang kembalian!</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Skenario Simulasi -->
+                        <div class="bg-teal-50 border-2 border-teal-200 p-5 rounded-2xl space-y-3">
+                            <span class="text-4xl">🍦</span>
+                            <h4 class="font-bold text-teal-900 text-lg">Beli Es Krim Rasa Stroberi</h4>
+                            <p class="text-sm text-slate-700">Kamu ingin membeli es krim kesukaanmu dengan rincian berikut:</p>
+                            <ul class="text-sm text-slate-700 list-disc list-inside space-y-1">
+                                <li>Harga es krim: <strong>Rp6.000,00</strong></li>
+                                <li>Uang yang kamu serahkan: <strong>Rp10.000,00</strong> (1 lembar)</li>
+                            </ul>
+                            <div class="pt-3 border-t border-teal-200">
+                                <p class="text-sm font-bold text-slate-800">Rumus Kembalian:</p>
+                                <p class="text-xs bg-white p-2 rounded border border-teal-300 font-semibold text-teal-800 mt-1">Uang Kembalian = Uang Bayar - Harga Barang</p>
+                            </div>
+                        </div>
+
+                        <!-- Hasil Kalkulator -->
+                        <div class="bg-emerald-50 border-2 border-emerald-200 p-5 rounded-2xl flex flex-col justify-between">
+                            <h4 class="font-bold text-emerald-900 text-lg mb-2">Berapa Uang Kembalianmu? 🪙</h4>
+                            <div class="space-y-3">
+                                <p class="text-2xl font-bold text-slate-800">Rp10.000 - Rp6.000</p>
+                                <p class="text-3xl font-bold text-emerald-600" id="tx-result">Rp ?</p>
+                            </div>
+                            <div class="mt-4 flex gap-2">
+                                <button onclick="calculateTransaction(4000)" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition">Hitung Kembalian</button>
+                                <button onclick="resetTransaction()" class="bg-gray-400 hover:bg-gray-300 text-white font-bold px-4 py-2 rounded-xl text-sm transition">Coba Lagi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigasi Materi -->
+                <div class="flex justify-between mt-8 pt-4 border-t-2 border-gray-100">
+                    <button id="btn-prev-materi" onclick="navigateMateri(-1)" class="bg-slate-500 hover:bg-slate-400 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-md">Sebelumnya</button>
+                    <button id="btn-next-materi" onclick="navigateMateri(1)" class="bg-teal-500 hover:bg-teal-400 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-md">Selanjutnya</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 7. SECTION KUIS INTERAKTIF -->
+        <!-- ========================================================== -->
+        <section id="sec-kuis" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-red-400 p-5 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-red-700">✍️ Kuis Interaktif Nilai Uang</h2>
+                        <p class="text-xs md:text-sm text-gray-500 font-semibold mt-1">Jawablah 10 pertanyaan seru ini dengan jujur dan teliti!</p>
+                    </div>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">Kembali 🏠</button>
+                </div>
+
+                <!-- Tampilan Mulai Kuis / Start State -->
+                <div id="quiz-start-view" class="text-center py-6 space-y-6">
+                    <span class="text-7xl block animate-bounce">🎓</span>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800">Apakah Kamu Sudah Siap Bertualang?</h3>
+                    <p class="text-gray-600 max-w-md mx-auto font-medium">Kuis ini berisi 10 soal seputar pengenalan nominal rupiah, perbandingan uang, dan simulasi belanja.</p>
+                    <button onclick="startQuiz()" class="bg-red-500 hover:bg-red-400 text-white font-bold text-lg px-8 py-3.5 rounded-2xl border-b-4 border-red-700 transition active:translate-y-1 active:border-b-0 shadow-lg">
+                        Mulai Kuis Sekarang! 🌟
+                    </button>
+                </div>
+
+                <!-- Tampilan Pertanyaan / Question State -->
+                <div id="quiz-play-view" class="hidden space-y-6">
+                    <!-- Progress Bar & Soal Ke -->
+                    <div class="flex items-center justify-between text-sm font-bold text-gray-500">
+                        <span id="quiz-q-num">Pertanyaan 1 dari 10</span>
+                        <span id="quiz-score-live">Skor: 0</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
+                        <div id="quiz-progress" class="bg-red-500 h-full transition-all duration-300" style="width: 10%;"></div>
+                    </div>
+
+                    <!-- Kotak Pertanyaan -->
+                    <div class="bg-red-50 p-5 rounded-2xl border-2 border-red-200">
+                        <h3 id="quiz-question-text" class="text-lg md:text-xl font-bold text-slate-800 leading-relaxed">Loading Pertanyaan...</h3>
+                    </div>
+
+                    <!-- Opsi Jawaban -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="quiz-options-container">
+                        <!-- Generate by JS -->
+                    </div>
+
+                    <!-- Feedback Alert Benar/Salah -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl font-bold text-center text-lg animate-pulse">
+                        <!-- Benar / Salah -->
+                    </div>
+
+                    <!-- Tombol Lanjut Soal -->
+                    <div class="flex justify-end">
+                        <button id="btn-quiz-next" onclick="nextQuestion()" class="hidden bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl shadow-md transition">Pertanyaan Berikutnya ➡️</button>
+                    </div>
+                </div>
+
+                <!-- Tampilan Hasil Skor Akhir / Result State -->
+                <div id="quiz-result-view" class="hidden text-center py-6 space-y-6">
+                    <span id="quiz-result-emoji" class="text-8xl block">🎉</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-slate-800" id="quiz-result-title">Luar Biasa Hebat!</h3>
+                    <p class="text-gray-600 font-semibold" id="quiz-result-subtitle">Kamu telah menyelesaikan semua kuis tentang mata uang.</p>
+                    
+                    <div class="bg-amber-100 border-4 border-amber-300 p-6 rounded-2xl inline-block">
+                        <p class="text-lg font-bold text-amber-800">Skor Akhir Kamu:</p>
+                        <h4 class="text-5xl md:text-6xl font-black text-amber-600" id="quiz-result-score">100 / 100</h4>
+                    </div>
+
+                    <div>
+                        <button onclick="startQuiz()" class="bg-red-500 hover:bg-red-400 text-white font-bold px-8 py-3.5 rounded-2xl transition border-b-4 border-red-700 shadow-md mr-3">Ulangi Kuis</button>
+                        <button onclick="playClickAndGo('menu')" class="bg-gray-500 hover:bg-gray-400 text-white font-bold px-8 py-3.5 rounded-2xl transition border-b-4 border-gray-700 shadow-md">Menu Utama</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 8. SECTION GAME EDUKASI: KASIR CILIK -->
+        <!-- ========================================================== -->
+        <section id="sec-game" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-orange-400 p-5 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-orange-700">🎮 Game: Kasir Cilik 🛒</h2>
+                        <p class="text-xs md:text-sm text-gray-500 font-semibold mt-0.5">Berikan kombinasi pecahan uang yang pas sesuai harga barang sebelum waktu habis!</p>
+                    </div>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">Kembali 🏠</button>
+                </div>
+
+                <!-- Game Start Screen -->
+                <div id="game-start-view" class="text-center py-8 space-y-6">
+                    <span class="text-8xl block animate-bounce">🛒</span>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800">Menjadi Kasir Cilik yang Cerdas!</h3>
+                    <p class="text-gray-600 max-w-md mx-auto font-medium">Klik pecahan uang kertas dan logam untuk membayar barang yang dibeli pelanggan sampai jumlahnya tepat!</p>
+                    <button onclick="startGame()" class="bg-orange-500 hover:bg-orange-400 text-white font-bold text-lg px-8 py-3.5 rounded-2xl border-b-4 border-orange-700 transition active:translate-y-1 active:border-b-0 shadow-lg">
+                        Mulai Bermain! 🌟
+                    </button>
+                </div>
+
+                <!-- Game Play Screen -->
+                <div id="game-play-view" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Panel Kiri: Informasi Barang Belanja & Target -->
+                    <div class="bg-orange-50 p-5 rounded-2xl border-2 border-orange-200 flex flex-col justify-between space-y-4">
+                        <div class="text-center">
+                            <span id="game-item-emoji" class="text-6xl md:text-7xl block mb-2">🍦</span>
+                            <h3 id="game-item-name" class="font-bold text-lg text-orange-950">Es Krim Cokelat</h3>
+                            <p class="text-sm text-gray-500">Harga Barang:</p>
+                            <h4 id="game-item-price" class="text-3xl font-black text-orange-700">Rp4.000</h4>
+                        </div>
+
+                        <!-- Bar Kemajuan Level -->
+                        <div class="bg-white p-3 rounded-xl border border-orange-200 space-y-1.5 text-xs font-bold text-gray-600">
+                            <div class="flex justify-between">
+                                <span>Level: <span id="game-level">1/5</span></span>
+                                <span>Waktu: <span id="game-timer" class="text-red-500">30s</span></span>
+                            </div>
+                            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                <div id="game-time-progress" class="bg-orange-500 h-full w-full transition-all duration-200"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel Tengah: Pembayaran Aktif (Koleksi Uang yang Telah Dimasukkan) -->
+                    <div class="bg-emerald-50 p-5 rounded-2xl border-2 border-emerald-200 flex flex-col justify-between space-y-4">
+                        <div class="text-center">
+                            <p class="text-sm font-bold text-slate-600 mb-1">Total Pembayaran Anda:</p>
+                            <h4 id="game-current-total" class="text-3xl font-black text-emerald-700">Rp0</h4>
+                        </div>
+
+                        <!-- Daftar Uang di Meja Kasir -->
+                        <div class="bg-white p-3 rounded-xl border border-emerald-200 min-h-[140px] flex flex-wrap gap-2 content-start items-start justify-center overflow-y-auto" id="game-cashier-desk">
+                            <p class="text-xs text-gray-400 font-semibold self-center" id="game-desk-placeholder">Klik uang di bawah untuk memasukkan...</p>
+                        </div>
+
+                        <!-- Kontrol Pembayaran -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="clearCashierDesk()" class="bg-rose-500 hover:bg-rose-400 text-white font-bold py-2 rounded-xl text-xs transition shadow">Reset Uang</button>
+                            <button onclick="checkGamePayment()" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2 rounded-xl text-xs border-b-2 border-emerald-700 transition shadow">Bayar Sekarang</button>
+                        </div>
+                    </div>
+
+                    <!-- Panel Kanan: Dompet / Pilihan Uang Rupiah -->
+                    <div class="bg-sky-50 p-4 rounded-2xl border-2 border-sky-200 flex flex-col justify-between space-y-3">
+                        <h4 class="font-bold text-center text-sm text-sky-850">👛 Dompet Uang Rupiah</h4>
+                        <p class="text-[10px] text-gray-500 text-center font-semibold">Klik salah satu uang untuk membayar!</p>
+                        
+                        <!-- Pilihan Uang -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="addMoneyToDesk(100)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm">🪙 Rp100</button>
+                            <button onclick="addMoneyToDesk(200)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm">🪙 Rp200</button>
+                            <button onclick="addMoneyToDesk(500)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm">🪙 Rp500</button>
+                            <button onclick="addMoneyToDesk(1000)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm">💵 Rp1.000</button>
+                            <button onclick="addMoneyToDesk(2000)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm">💵 Rp2.000</button>
+                            <button onclick="addMoneyToDesk(5000)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm">💵 Rp5.000</button>
+                            <button onclick="addMoneyToDesk(10000)" class="bg-white hover:bg-gray-100 border border-gray-300 p-2 rounded-xl font-bold text-xs text-slate-700 transition shadow-sm col-span-2">💵 Rp10.000</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Result Screen -->
+                <div id="game-result-view" class="hidden text-center py-6 space-y-6">
+                    <span id="game-result-emoji" class="text-8xl block">🏆</span>
+                    <h3 class="text-3xl font-bold text-slate-800" id="game-result-title">Hebat Sekali!</h3>
+                    <p class="text-gray-600 font-semibold" id="game-result-subtitle">Kamu telah berhasil menjadi kasir cilik yang luar biasa.</p>
+                    
+                    <div class="bg-amber-100 border-4 border-amber-300 p-6 rounded-2xl inline-block">
+                        <p class="text-lg font-bold text-amber-800">Skor Game Akhir:</p>
+                        <h4 class="text-5xl font-black text-amber-600" id="game-result-score">500 poin</h4>
+                    </div>
+
+                    <div>
+                        <button onclick="startGame()" class="bg-orange-500 hover:bg-orange-400 text-white font-bold px-8 py-3.5 rounded-2xl transition border-b-4 border-orange-700 shadow-md mr-3">Main Lagi</button>
+                        <button onclick="playClickAndGo('menu')" class="bg-gray-500 hover:bg-gray-400 text-white font-bold px-8 py-3.5 rounded-2xl transition border-b-4 border-gray-700 shadow-md">Menu Utama</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================== -->
+        <!-- 9. SECTION TIM PENGEMBANG -->
+        <!-- ========================================================== -->
+        <section id="sec-tim" class="hidden w-full">
+            <div class="bg-white/95 border-6 border-lime-400 p-6 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto text-center">
+                <div class="flex justify-between items-center mb-6 text-left">
+                    <h2 class="text-2xl md:text-3xl font-bold text-lime-850">👩‍🏫 Tim Pengembang</h2>
+                    <button onclick="playClickAndGo('menu')" class="bg-rose-500 hover:bg-rose-400 text-white font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">Kembali 🏠</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-4">
+                    <!-- Kartu Pengembang -->
+                    <div class="bg-gradient-to-tr from-lime-50 to-emerald-50 p-6 rounded-2xl border-4 border-lime-200 flex flex-col items-center">
+                        <!-- Profil Avatar -->
+                        <div class="w-24 h-24 bg-lime-300 rounded-full flex items-center justify-center text-5xl mb-4 border-4 border-white shadow-md">
+                            👩‍🏫
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-850 mb-1">Sri Handayani, S.Pd.</h3>
+                        <p class="text-sm text-lime-700 font-bold mb-3">Guru Kelas IV SD Negeri Cerdas Mulia</p>
+                        <p class="text-xs text-gray-500 font-medium leading-relaxed italic">"Mengajar dengan hati, mendidik dengan teknologi untuk masa depan anak bangsa yang gemilang."</p>
+                    </div>
+
+                    <!-- Motivasi & Logo -->
+                    <div class="space-y-6 flex flex-col items-center">
+                        <!-- Logo Placeholder -->
+                        <div class="w-32 h-32 border-4 border-dashed border-lime-300 rounded-2xl flex flex-col items-center justify-center bg-lime-50/50 p-3">
+                            <span class="text-5xl mb-1">🏫</span>
+                            <span class="text-[10px] text-gray-500 font-black tracking-wider text-center">LOGO SEKOLAH</span>
+                        </div>
+                        
+                        <div class="bg-amber-50 p-5 rounded-2xl border-2 border-amber-200">
+                            <h4 class="font-bold text-amber-800 text-base mb-1">🌟 Pesan Motivasi Belajar:</h4>
+                            <p class="text-xs text-amber-950 font-bold leading-relaxed italic">"Anak-anak hebat, teruslah rajin belajar dan kenali nilai uang agar kelak bisa mengatur keuanganmu secara mandiri dan sukses di masa depan!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER / COPYRIGHT -->
+    <footer class="relative z-10 w-full text-center py-4 bg-white/60 backdrop-blur border-t-2 border-blue-100 text-slate-500 text-xs font-bold">
+        &copy; 2026 Media Pembelajaran Interaktif IPAS Kelas IV • Dibuat khusus untuk Pembelajaran Kreatif 🎓
+    </footer>
+
+    <!-- AUDIO DAN WEB AUDIO API GENERATOR (Mencegah Error Block Browser) -->
+    <script>
+        // WEB AUDIO API UNTUK MENGHASILKAN MUSIK / EFEK SECARA PROGRAMATIS (Mandiri Tanpa Asset Eksternal)
+        let audioCtx = null;
+        let bgMusicNode = null;
+        let isMusicPlaying = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Penghasil Nada Bip (Beep Generator) untuk klik & feedback
+        function playBeep(frequency, duration, type = 'sine') {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = type;
+                osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.warn("Web Audio API belum diizinkan atau tidak didukung:", e);
+            }
+        }
+
+        // Efek Suara
+        function playSoundEffect(type) {
+            if (type === 'click') {
+                playBeep(600, 0.1, 'sine');
+            } else if (type === 'correct') {
+                playBeep(523.25, 0.15, 'triangle'); // C5
+                setTimeout(() => playBeep(659.25, 0.3, 'triangle'), 100); // E5
+            } else if (type === 'incorrect') {
+                playBeep(220, 0.25, 'sawtooth'); // A3
+                setTimeout(() => playBeep(180, 0.3, 'sawtooth'), 150);
+            } else if (type === 'victory') {
+                playBeep(523.25, 0.15, 'sine');
+                setTimeout(() => playBeep(659.25, 0.15, 'sine'), 100);
+                setTimeout(() => playBeep(783.99, 0.15, 'sine'), 200);
+                setTimeout(() => playBeep(1046.50, 0.4, 'sine'), 300); // High C
+            }
+        }
+
+        // Loop Musik Latar Ceria Berkelanjutan
+        function startBackgroundMusic() {
+            try {
+                initAudio();
+                if (bgMusicNode) return; // Sudah berjalan
+
+                // Membuat oscillator berulang untuk melodi sederhana
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime); // Volume sangat pelan/nyaman
+                
+                let noteIndex = 0;
+                // C Major Arpeggio Pentatonik Ceria
+                const melody = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63, 293.66];
+                
+                const playMelodyLoop = () => {
+                    if (!isMusicPlaying) return;
+                    
+                    const osc = audioCtx.createOscillator();
+                    osc.type = 'triangle'; // Suara retro game yang ceria
+                    osc.frequency.setValueAtTime(melody[noteIndex % melody.length], audioCtx.currentTime);
+                    
+                    const noteGain = audioCtx.createGain();
+                    noteGain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                    noteGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                    
+                    osc.connect(noteGain);
+                    noteGain.connect(audioCtx.destination);
+                    
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.6);
+                    
+                    noteIndex++;
+                    bgMusicNode = setTimeout(playMelodyLoop, 600); // Tiap 0.6 detik berpindah nada
+                };
+                
+                isMusicPlaying = true;
+                playMelodyLoop();
+            } catch (e) {
+                console.warn("Gagal memainkan musik:", e);
+            }
+        }
+
+        function stopBackgroundMusic() {
+            isMusicPlaying = false;
+            if (bgMusicNode) {
+                clearTimeout(bgMusicNode);
+                bgMusicNode = null;
+            }
+        }
+
+        function toggleMusic() {
+            playSoundEffect('click');
+            const btn = document.getElementById('btn-audio');
+            const icon = document.getElementById('audio-icon');
+            
+            if (isMusicPlaying) {
+                stopBackgroundMusic();
+                btn.className = "bg-red-100 hover:bg-red-200 border-2 border-red-400 text-red-700 px-3 py-1.5 rounded-full flex items-center gap-1.5 font-bold text-sm transition-all duration-300 shadow-sm";
+                icon.innerText = "🔇";
+            } else {
+                startBackgroundMusic();
+                btn.className = "bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-400 text-emerald-700 px-3 py-1.5 rounded-full flex items-center gap-1.5 font-bold text-sm transition-all duration-300 shadow-sm";
+                icon.innerText = "🔊";
+            }
+        }
+    </script>
+
+
+    <!-- NAVIGATION & LOGICAL APP SCRIPT -->
+    <script>
+        // Manajemen Halaman
+        const sections = ['welcome', 'menu', 'judul', 'sasaran', 'materi', 'petunjuk', 'kuis', 'game', 'tim'];
+        
+        function showSection(sectionId) {
+            // Sembunyikan semua section
+            sections.forEach(sec => {
+                const element = document.getElementById(`sec-${sec}`);
+                if (element) element.classList.add('hidden');
+            });
+            
+            // Tampilkan section target
+            const targetSec = document.getElementById(`sec-${sectionId}`);
+            if (targetSec) targetSec.classList.remove('hidden');
+
+            // Kontrol tombol home di header
+            const btnHome = document.getElementById('header-btn-home');
+            if (sectionId === 'welcome' || sectionId === 'menu') {
+                btnHome.classList.add('hidden');
+            } else {
+                btnHome.classList.remove('hidden');
+            }
+
+            // Hentikan aktivitas di luar halaman jika keluar dari game
+            if (sectionId !== 'game') {
+                stopGameTimer();
+            }
+        }
+
+        function playClickAndGo(sectionId) {
+            playSoundEffect('click');
+            showSection(sectionId);
+        }
+
+        // Fullscreen Mode
+        function toggleFullscreen() {
+            playSoundEffect('click');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Gagal memicu layar penuh: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Materi Flip Card Toggle
+        function toggleCardFlip(cardElement) {
+            playSoundEffect('click');
+            cardElement.classList.toggle('flipped');
+        }
+
+        // Switch Tab Materi
+        let currentMateriTab = 1;
+        function switchMateriTab(tabIndex) {
+            playSoundEffect('click');
+            currentMateriTab = tabIndex;
+            for (let i = 1; i <= 4; i++) {
+                const tabBtn = document.getElementById(`tab-materi-${i}`);
+                const tabContent = document.getElementById(`sub-materi-${i}`);
+                
+                if (i === tabIndex) {
+                    tabBtn.className = "px-4 py-2 rounded-xl font-bold text-sm md:text-base whitespace-nowrap bg-teal-500 text-white transition";
+                    tabContent.classList.remove('hidden');
+                } else {
+                    tabBtn.className = "px-4 py-2 rounded-xl font-bold text-sm md:text-base whitespace-nowrap bg-gray-100 text-gray-600 hover:bg-teal-100 transition";
+                    tabContent.classList.add('hidden');
+                }
+            }
+        }
+
+        function navigateMateri(direction) {
+            let nextTab = currentMateriTab + direction;
+            if (nextTab < 1) nextTab = 4;
+            if (nextTab > 4) nextTab = 1;
+            switchMateriTab(nextTab);
+        }
+
+        // Skenario Transaksi Sederhana
+        function calculateTransaction(expected) {
+            playSoundEffect('correct');
+            const resultBox = document.getElementById('tx-result');
+            resultBox.innerText = `Rp${expected.toLocaleString('id-ID')},00`;
+            resultBox.className = "text-3xl font-black text-emerald-600 animate-bounce";
+        }
+
+        function resetTransaction() {
+            playSoundEffect('click');
+            const resultBox = document.getElementById('tx-result');
+            resultBox.innerText = `Rp ?`;
+            resultBox.className = "text-3xl font-black text-emerald-600";
+        }
+    </script>
+
+
+    <!-- KUIS INTERAKTIF LOGIC -->
+    <script>
+        const quizData = [
+            {
+                q: "Apa nama mata uang resmi negara kita Indonesia?",
+                o: ["Dollar", "Rupiah", "Yen", "Ringgit"],
+                a: 1
+            },
+            {
+                q: "Bagaimana cara menulis nominal uang 'Lima ribu rupiah' yang benar?",
+                o: ["Rp5.00", "Rp500", "Rp5.000,00", "Rp50.000"],
+                a: 2
+            },
+            {
+                q: "Manakah nilai mata uang berikut yang paling besar?",
+                o: ["Rp2.000", "Rp500", "Rp1.000", "Rp10.000"],
+                a: 3
+            },
+            {
+                q: "Manakah tanda pembanding yang benar: Rp2.000 .... Rp200?",
+                o: ["Lebih Kecil Dari (<)", "Sama Dengan (=)", "Lebih Besar Dari (>)", "Semua Salah"],
+                a: 2
+            },
+            {
+                q: "Ibu membeli sayur seharga Rp7.000 dan membayar dengan selembar uang Rp10.000. Berapa kembalian Ibu?",
+                o: ["Rp2.000", "Rp3.000", "Rp4.000", "Rp5.000"],
+                a: 1
+            },
+            {
+                q: "Jika kamu menggabungkan dua lembar uang Rp5.000, berapakah nilainya sekarang?",
+                o: ["Rp5.000", "Rp10.000", "Rp15.000", "Rp20.000"],
+                a: 1
+            },
+            {
+                q: "Warna dominan dari pecahan uang Rp50.000,00 baru adalah...",
+                o: ["Merah", "Ungu", "Biru", "Hijau"],
+                a: 2
+            },
+            {
+                q: "Manakah kelompok uang logam berikut yang jumlahnya setara dengan Rp1.000?",
+                o: ["Dua koin Rp200", "Dua koin Rp500", "Lima koin Rp100", "Satu koin Rp500 & dua koin Rp100"],
+                a: 1
+            },
+            {
+                q: "Adi mempunyai uang Rp20.000. Dipakai membeli buku Rp12.000 dan pensil Rp5.000. Berapa sisa uang Adi?",
+                o: ["Rp3.000", "Rp5.000", "Rp8.000", "Rp17.000"],
+                a: 0
+            },
+            {
+                q: "Alat pembayaran kuno yang sah sebelum ditemukannya uang logam atau kertas adalah...",
+                o: ["Kartu Kredit", "Barter (Tukar Barang)", "Transfer Bank", "Dompet Digital"],
+                a: 1
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let quizScore = 0;
+        let hasAnswered = false;
+
+        function startQuiz() {
+            playSoundEffect('click');
+            currentQuestionIdx = 0;
+            quizScore = 0;
+            hasAnswered = false;
+            
+            document.getElementById('quiz-start-view').classList.add('hidden');
+            document.getElementById('quiz-result-view').classList.add('hidden');
+            document.getElementById('quiz-play-view').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            hasAnswered = false;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('btn-quiz-next').classList.add('hidden');
+
+            const currentQ = quizData[currentQuestionIdx];
+            
+            // Atur teks soal dan progres
+            document.getElementById('quiz-q-num').innerText = `Pertanyaan ${currentQuestionIdx + 1} dari ${quizData.length}`;
+            document.getElementById('quiz-score-live').innerText = `Skor: ${quizScore}`;
+            document.getElementById('quiz-question-text').innerText = currentQ.q;
+            
+            const progressPct = ((currentQuestionIdx + 1) / quizData.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progressPct}%`;
+
+            // Atur tombol opsi jawaban
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            currentQ.o.forEach((optionText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "bg-white hover:bg-red-50 border-3 border-gray-200 p-4 rounded-xl font-bold text-left transition text-slate-700 active:scale-98 shadow-sm text-sm sm:text-base";
+                btn.innerHTML = `
+                    <span class="inline-block w-8 h-8 bg-red-100 text-red-600 rounded-full text-center leading-8 mr-3">${String.fromCharCode(65 + idx)}</span>
+                    ${optionText}
+                `;
+                btn.onclick = () => selectAnswer(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(selectedIdx, clickedButton) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            const currentQ = quizData[currentQuestionIdx];
+            const feedbackBox = document.getElementById('quiz-feedback');
+            const buttons = document.getElementById('quiz-options-container').children;
+
+            // Nonaktifkan semua pilihan
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+
+            if (selectedIdx === currentQ.a) {
+                // Jawaban Benar
+                playSoundEffect('correct');
+                quizScore += 10;
+                clickedButton.classList.replace('border-gray-200', 'border-emerald-500');
+                clickedButton.classList.add('bg-emerald-50');
+                
+                feedbackBox.className = "p-4 rounded-xl font-bold text-center text-lg animate-pulse bg-emerald-100 text-emerald-800";
+                feedbackBox.innerHTML = "🎉 Jawabanmu Benar! Hebat sekali!";
+            } else {
+                // Jawaban Salah
+                playSoundEffect('incorrect');
+                clickedButton.classList.replace('border-gray-200', 'border-rose-500');
+                clickedButton.classList.add('bg-rose-50');
+                
+                // Sorot jawaban yang benar
+                buttons[currentQ.a].classList.replace('border-gray-200', 'border-emerald-500');
+                buttons[currentQ.a].classList.add('bg-emerald-50');
+
+                feedbackBox.className = "p-4 rounded-xl font-bold text-center text-lg animate-pulse bg-rose-100 text-rose-800";
+                feedbackBox.innerHTML = "😢 Kurang Tepat, coba lagi di soal berikutnya ya!";
+            }
+
+            feedbackBox.classList.remove('hidden');
+            document.getElementById('btn-quiz-next').classList.remove('hidden');
+            document.getElementById('quiz-score-live').innerText = `Skor: ${quizScore}`;
+        }
+
+        function nextQuestion() {
+            playSoundEffect('click');
+            currentQuestionIdx++;
+            if (currentQuestionIdx < quizData.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-play-view').classList.add('hidden');
+            const resultView = document.getElementById('quiz-result-view');
+            resultView.classList.remove('hidden');
+
+            const scoreDisplay = document.getElementById('quiz-result-score');
+            const titleDisplay = document.getElementById('quiz-result-title');
+            const emojiDisplay = document.getElementById('quiz-result-emoji');
+            
+            scoreDisplay.innerText = `${quizScore} / 100`;
+
+            if (quizScore >= 80) {
+                playSoundEffect('victory');
+                titleDisplay.innerText = "Wow! Kamu Juara Kelas! 🏆";
+                emojiDisplay.innerText = "👑";
+            } else if (quizScore >= 60) {
+                playSoundEffect('correct');
+                titleDisplay.innerText = "Kerja Bagus! Terus Belajar! 🌟";
+                emojiDisplay.innerText = "🎈";
+            } else {
+                playSoundEffect('incorrect');
+                titleDisplay.innerText = "Jangan Menyerah, Ayo Coba Lagi! 💪";
+                emojiDisplay.innerText = "💫";
+            }
+        }
+    </script>
+
+
+    <!-- GAME INTERAKTIF: KASIR CILIK LOGIC -->
+    <script>
+        const gameItems = [
+            { name: "Es Krim Stroberi", price: 6000, emoji: "🍦" },
+            { name: "Donat Cokelat Manis", price: 3500, emoji: "🍩" },
+            { name: "Susu Kotak Ceria", price: 4500, emoji: "🧃" },
+            { name: "Buku Tulis Kreatif", price: 8000, emoji: "📓" },
+            { name: "Mainan Pesawat Kertas", price: 12500, emoji: "✈️" }
+        ];
+
+        let gameLevel = 1;
+        let gameScore = 0;
+        let gameTimeLeft = 30;
+        let gameTimerInterval = null;
+        let currentItem = null;
+        let currentPaymentOnDesk = 0;
+        let selectedCoinsAndBills = [];
+
+        function startGame() {
+            playSoundEffect('click');
+            gameLevel = 1;
+            gameScore = 0;
+            
+            document.getElementById('game-start-view').classList.add('hidden');
+            document.getElementById('game-result-view').classList.add('hidden');
+            document.getElementById('game-play-view').classList.remove('hidden');
+            
+            loadGameLevel();
+        }
+
+        function loadGameLevel() {
+            currentItem = gameItems[gameLevel - 1];
+            currentPaymentOnDesk = 0;
+            selectedCoinsAndBills = [];
+            gameTimeLeft = 45 - (gameLevel * 3); // Waktu berkurang seiring level naik
+            
+            document.getElementById('game-level').innerText = `${gameLevel}/5`;
+            document.getElementById('game-item-emoji').innerText = currentItem.emoji;
+            document.getElementById('game-item-name').innerText = currentItem.name;
+            document.getElementById('game-item-price').innerText = `Rp${currentItem.price.toLocaleString('id-ID')}`;
+            
+            updateCashierDeskUI();
+            startGameTimer();
+        }
+
+        function startGameTimer() {
+            stopGameTimer();
+            updateTimerUI();
+            
+            gameTimerInterval = setInterval(() => {
+                gameTimeLeft--;
+                updateTimerUI();
+                
+                if (gameTimeLeft <= 0) {
+                    stopGameTimer();
+                    playSoundEffect('incorrect');
+                    showGameResult(false);
+                }
+            }, 1000);
+        }
+
+        function stopGameTimer() {
+            if (gameTimerInterval) {
+                clearInterval(gameTimerInterval);
+                gameTimerInterval = null;
+            }
+        }
+
+        function updateTimerUI() {
+            document.getElementById('game-timer').innerText = `${gameTimeLeft}s`;
+            const maxTime = 45 - (gameLevel * 3);
+            const progressPct = (gameTimeLeft / maxTime) * 100;
+            document.getElementById('game-time-progress').style.width = `${progressPct}%`;
+        }
+
+        function addMoneyToDesk(value) {
+            playSoundEffect('click');
+            selectedCoinsAndBills.push(value);
+            currentPaymentOnDesk += value;
+            updateCashierDeskUI();
+        }
+
+        function clearCashierDesk() {
+            playSoundEffect('click');
+            selectedCoinsAndBills = [];
+            currentPaymentOnDesk = 0;
+            updateCashierDeskUI();
+        }
+
+        function updateCashierDeskUI() {
+            const desk = document.getElementById('game-cashier-desk');
+            const placeholder = document.getElementById('game-desk-placeholder');
+            const totalDisplay = document.getElementById('game-current-total');
+
+            totalDisplay.innerText = `Rp${currentPaymentOnDesk.toLocaleString('id-ID')}`;
+
+            if (selectedCoinsAndBills.length === 0) {
+                placeholder.classList.remove('hidden');
+                // Bersihkan elemen lain selain placeholder
+                Array.from(desk.children).forEach(child => {
+                    if (child.id !== 'game-desk-placeholder') child.remove();
+                });
+            } else {
+                placeholder.classList.add('hidden');
+                // Hapus elemen lama di luar placeholder
+                Array.from(desk.children).forEach(child => {
+                    if (child.id !== 'game-desk-placeholder') child.remove();
+                });
+
+                // Tampilkan visual uang logam/kertas di meja
+                selectedCoinsAndBills.forEach(val => {
+                    const badge = document.createElement('span');
+                    const isBill = val >= 1000;
+                    badge.className = isBill 
+                        ? "bg-teal-100 border border-teal-400 text-teal-800 px-2 py-1 rounded-md text-xs font-bold font-mono shadow-sm"
+                        : "bg-amber-100 border border-amber-400 text-amber-800 px-2 py-1 rounded-full text-xs font-bold font-mono shadow-sm";
+                    badge.innerText = isBill ? `💵 Rp${val}` : `🪙 Rp${val}`;
+                    desk.appendChild(badge);
+                });
+            }
+        }
+
+        function checkGamePayment() {
+            if (currentPaymentOnDesk === currentItem.price) {
+                // Jawaban Tepat Pas!
+                playSoundEffect('correct');
+                stopGameTimer();
+                gameScore += 100 + (gameTimeLeft * 2); // Skor bonus sisa waktu
+
+                if (gameLevel < 5) {
+                    gameLevel++;
+                    // Efek visual sukses sejenak sebelum level naik
+                    const desk = document.getElementById('game-cashier-desk');
+                    desk.innerHTML = `<span class="text-emerald-600 font-bold text-lg animate-bounce">✨ Uang Pas! Pembayaran Berhasil! ✨</span>`;
+                    setTimeout(() => {
+                        loadGameLevel();
+                    }, 1500);
+                } else {
+                    showGameResult(true);
+                }
+            } else if (currentPaymentOnDesk > currentItem.price) {
+                // Uang berlebih (kasir harus jujur memberi kembalian/dalam game ini minta uang pas)
+                playSoundEffect('incorrect');
+                const desk = document.getElementById('game-cashier-desk');
+                desk.innerHTML = `<span class="text-rose-600 font-bold text-xs text-center">Uangmu Lebih! Pelanggan minta uang pas tanpa kembalian ya!</span>`;
+                setTimeout(() => updateCashierDeskUI(), 2000);
+            } else {
+                // Uang kurang
+                playSoundEffect('incorrect');
+                const desk = document.getElementById('game-cashier-desk');
+                desk.innerHTML = `<span class="text-amber-600 font-bold text-xs text-center">Uangmu Kurang! Yuk kumpulkan pecahan lainnya!</span>`;
+                setTimeout(() => updateCashierDeskUI(), 2000);
+            }
+        }
+
+        function showGameResult(isVictory) {
+            document.getElementById('game-play-view').classList.add('hidden');
+            const resultView = document.getElementById('game-result-view');
+            resultView.classList.remove('hidden');
+
+            const resultEmoji = document.getElementById('game-result-emoji');
+            const resultTitle = document.getElementById('game-result-title');
+            const resultSubtitle = document.getElementById('game-result-subtitle');
+            const resultScore = document.getElementById('game-result-score');
+
+            resultScore.innerText = `${gameScore} poin`;
+
+            if (isVictory) {
+                playSoundEffect('victory');
+                resultEmoji.innerText = "🏆";
+                resultTitle.innerText = "Kasir Cilik Terbaik! 👑";
+                resultSubtitle.innerText = "Hebat! Kamu berhasil menghitung pembayaran untuk 5 pembeli secara berturut-turut.";
+            } else {
+                resultEmoji.innerText = "⏳";
+                resultTitle.innerText = "Waktu Habis! Ayoo Coba Lagi!";
+                resultSubtitle.innerText = "Sayang sekali waktu belanjamu habis. Berlatihlah agar bisa menghitung lebih cepat!";
+            }
+        }
+    </script>
+</body>
+</html>
